@@ -12,6 +12,13 @@ struct node_struct *txt2words(FILE *fp) {
 	/* string represents the text */
 	char book[256];
 	
+	/* points to actual array of text
+	 * set to book */
+	char *ptr = book;
+	
+	/* the one word in text that is being pointed to */
+	char *word;
+	
 	/* check if file exist */
 	if (fp != NULL) 
 	{
@@ -20,6 +27,9 @@ struct node_struct *txt2words(FILE *fp) {
 		{
 			/* print out each line of text */
 			fprintf(stdout, "%s", book);
+			
+			/* call ge_word and get address of the text */
+			word = get_word(&ptr);
 		}
 		
 		/* close the file */
@@ -33,37 +43,57 @@ struct node_struct *txt2words(FILE *fp) {
 		return 0;
 	}
 		
-return NULL;
+return 0;
 }
 
 /* helper function - take double pointer to string and returns
  * a malloced string containing the first word in input */
 char *get_word(char **string) {
 	
-	/* single pointer */
+	/* holds first word in text */
 	char *word;
 	
-	/* malloced string */
-	word = malloc(sizeof(char)*256);
+	int i;
 	
-	/* double pointer points to beginning of next word */
+	/* counter variable */
+	int count = 0;
 	
+	/* dereference double pointer once as *string - gets actual text */
+	for (i = 0; (*string)[i] != '\0'; i++)
+	{
+		/* check if its a sequence of characters */
+		if (isalpha((*string)[i]) != 0)
+		{		
+			/* to save enough space for chars of the word */
+			word = realloc(word, (sizeof(char)*count) + (sizeof(char)));
+			
+			/* set single pointer to the sequence of characters
+			 * for one word */ 
+			word[count] = (*string)[i];
+			
+			count++;
+			
+			/* value of double pointer increments */
+		    string++;
+		     
+		}
+	
+	}
 
-	
 return word;
 }
 
-//void free_list(struct node *list, int free_data)
-//{
-	//if (list != NULL)
-	//{
-		//free_list(list->next);
-		//free(list);
-	//}
+/*void free_list(struct node *list, int free_data)
+{
+	if (list != NULL)
+	{
+		free_list(list->next);
+		free(list);
+	}
 	
-	//else if (free_data > 0)
-	//{
+	else if (free_data > 0)
+	{
 
-	//}
-//}
+	}
+}*/
 

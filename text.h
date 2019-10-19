@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 /* Full Name: Camille Cua
  * Student ID: 1046663
@@ -26,5 +27,6 @@ struct node_struct *sort(struct node_struct *list, int (*compar)(const void *, c
 void remove_repeats(struct node_struct *list, int (*compar)(const void *, const void *));
 int length(struct node_struct *list);
 void free_list(struct node_struct *list, int free_data);
+char *get_word(char **string);
 
 
