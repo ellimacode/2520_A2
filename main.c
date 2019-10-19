@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "text.h"
 
+/* Full Name: Camille Cua
+ * Student ID: 1046663
+ * Email: ccua@uoguelph.ca */
 
 int main() {
 	

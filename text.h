@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Full Name: Camille Cua
+ * Student ID: 1046663
+ * Email: ccua@uoguelph.ca */
 
 /* this structure will represent your text, the attribute "data" will 
  * point to malloced memory holding a string of text followe by '\0'
