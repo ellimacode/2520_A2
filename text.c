@@ -28,8 +28,10 @@ struct node_struct *txt2words(FILE *fp) {
 			/* print out each line of text */
 			fprintf(stdout, "%s", book);
 			
-			/* call ge_word and get address of the text */
+			/* call get_word and get address of the text */
 			word = get_word(&ptr);
+			
+			printf("The first word is %s\n", word);
 		}
 		
 		/* close the file */
@@ -43,7 +45,7 @@ struct node_struct *txt2words(FILE *fp) {
 		return 0;
 	}
 		
-return 0;
+return NULL;
 }
 
 /* helper function - take double pointer to string and returns
@@ -62,26 +64,27 @@ char *get_word(char **string) {
 	for (i = 0; (*string)[i] != '\0'; i++)
 	{
 		/* check if its a sequence of characters */
-		if (isalpha((*string)[i]) != 0)
+		if (isalpha((*string)[i]) != 0 || isdigit((*string)[i]) != 0)
 		{		
 			/* to save enough space for chars of the word */
-			word = realloc(word, (sizeof(char)*count) + (sizeof(char)));
+			word = realloc(word, sizeof(char)*count + sizeof(char));
 			
 			/* set single pointer to the sequence of characters
 			 * for one word */ 
 			word[count] = (*string)[i];
-			
 			count++;
 			
 			/* value of double pointer increments */
 		    string++;
-		     
-		}
-	
-	}
 
+		}
+		
+	}
+	
 return word;
 }
+
+
 
 /*void free_list(struct node *list, int free_data)
 {
