@@ -14,10 +14,12 @@ struct node_struct *txt2words(FILE *fp) {
 	
 	/* points to actual array of text
 	 * set to book */
-	char *ptr = book;
+	char *ptr = book; 
 	
 	/* the one word in text that is being pointed to */
-	char *word;
+	char *word; 
+	
+	struct node_struct *head, **current;
 	
 	/* check if file exist */
 	if (fp != NULL) 
@@ -30,8 +32,7 @@ struct node_struct *txt2words(FILE *fp) {
 			
 			/* call get_word and get address of the text */
 			word = get_word(&ptr);
-			
-			printf("The first word is %s\n", word);
+		
 		}
 		
 		/* close the file */
@@ -44,8 +45,21 @@ struct node_struct *txt2words(FILE *fp) {
 		printf("The file doesn't exist\n");
 		return 0;
 	}
+	
+	current = &head; 
+	
+	while (current != NULL)
+	{
+		*current = malloc(sizeof(struct node_struct));
+		(*current)->data = &ptr;
+		current = &((*current)->next);
 		
-return NULL;
+	}
+	
+	*current = NULL;
+	
+	
+return head;
 }
 
 /* helper function - take double pointer to string and returns
@@ -84,19 +98,75 @@ char *get_word(char **string) {
 return word;
 }
 
-
-
-/*void free_list(struct node *list, int free_data)
+/* search function - run the compar with data and target,  */
+struct node_struct *search(struct node_struct *list, char *target, int(*compar)(const void *, const void *))
 {
-	if (list != NULL)
+	while (list != NULL)
 	{
-		free_list(list->next);
-		free(list);
+		/* advance the pointer to next item in list */
+		list = list->next;
+		
+		/* if compar function returns 0, node is considered found */
+		if (compar(list->data, target) == 0)
+		{
+			
+		}
+		
+	}
+
+return 0;	
+}
+
+/* ftext - print out strings pointed to by data */
+void ftext(FILE *fp, struct node_struct *list)
+{
+	while (list != NULL)
+	{
+		/* print the data attribute of the structure pointed
+		 * to by the list */
+		fprintf(fp, "%s", ((char*)list->data));
+		
+		/* advance pointer to point to next item in list */
+		list = list->next;
+	}
+}
+
+/* length function - returns number of nodes in the list */
+int length(struct node_struct *list)
+{
+	/* counter variable */
+	int count = 0;
+	
+	struct node_struct *current = list;
+	
+	while (current != NULL)
+	{
+		/* increment count for each node in list */
+		count++;
+		current = current->next;
 	}
 	
-	else if (free_data > 0)
-	{
+return count;	
+}
 
+/* free function */
+void free_list(struct node_struct *list, int free_data)
+{
+	/* free contents of list first */
+	if (list != NULL)
+	{
+		free(list->next);
+		
 	}
-}*/
+	
+	/* free entire list */
+	free(list);
+	
+	if (free_data != 0)
+	{
+		free(list->data);
+	}
+	
+	
+}
 
